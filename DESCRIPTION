@@ -1,6 +1,6 @@
-Package: tootkit
+Package: miao
 Type: Package
-Title: Tootkit
+Title: Miao! Miauw! Miaow! Miaou! Mjau! Meow!
 Version: 0.1.0
 Authors@R: 
     person(given = "Todd",
@@ -16,14 +16,11 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports:
 	data.table,
-	DBI,
 	dbplyr,
 	dplyr,
 	dtplyr,
 	grDevices,
-	keyring,
 	magrittr,
-	odbc,
 	rstudioapi,
 	stringr,
 	tibble,
