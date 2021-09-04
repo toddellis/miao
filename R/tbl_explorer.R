@@ -1,17 +1,19 @@
 #' tbl_explorer
 #'
-#' Counts all unique values in an entire dataset across all columns
+#' Counts all unique values in an entire dataset across all columns.
 #'
 #' @param x Dataset
 #' @param min Numeric cutoff point for minimum number of observation occurrences. Can be a proportion or an integer value.
-#' @param drop_numeric Logical argument to drop numeric columns with a lot of variability
+#' @param drop_numeric Logical argument to drop numeric columns with a lot of variability.
 #'
 #' @return A dataframe with column and value counts.
 #' @export
 #'
 #' @examples
-#' utas_tbl('students.campuses') %>%
-#'   tbl_exporer()
+#' tibble::tibble(a = c('A','B', NA),
+#'                b = c(1.2, 1.2, 1.2),
+#'                c = c(4.5, NA, NA)) %>%
+#'  tbl_explorer()
 #'
 
 tbl_explorer <- function(x,
@@ -32,13 +34,14 @@ tbl_explorer <- function(x,
     dplyr::mutate(.factor = factor(.col,
                                    levels = unique(.col))) %>%
     dplyr::group_by(.factor) %>%
-    dplyr::mutate(.id = dplyr::cur_group_id()) %>%
+    dplyr::mutate(.group_id = dplyr::cur_group_id()) %>%
     dplyr::ungroup() %>%
-    dplyr::count(.id, .col, .val,
-                 name = '.n') %>%
-    dplyr::arrange(.id, -.n) %>%
-    dplyr::group_by(.id) %>%
-    dplyr::mutate(.rn = row_number()) %>%
+    dplyr::count(.group_id, .col, .val,
+                 name = '.count') %>%
+    dplyr::arrange(.group_id, -.count) %>%
+    dplyr::group_by(.group_id) %>%
+    dplyr::mutate(.rn = dplyr::cur_group_rows(),
+                  .nrow = dplyr::n()) %>%
     dplyr::ungroup()
 
   if (min < 0) {
@@ -50,15 +53,15 @@ tbl_explorer <- function(x,
     output
   } else if (min > 1) {
     output %>%
-      dplyr::filter(.n >= min)
+      dplyr::filter(.count >= min)
   } else if (dplyr::between(min, 0, 1)) {
     output %>%
-      dplyr::filter(.n >= (min * nrow(x)))
+      dplyr::filter(.count >= (min * nrow(x)))
   }
 
 }
 
 #' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-08-26
+#' DATE        : 2021-09-04 : 2021-08-26
 #' NOTES       :
 #' TODO        :

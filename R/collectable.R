@@ -2,28 +2,32 @@
 #'
 #' Wraps a timer around functions that pulls a lazy database query into memory.
 #'
-#' @param x : dataset
-#' @param qid chr: optional query identifier to assign to query
-#' @param format chr: output format type, either via `data.table`, `dtplyr`, or `tibble`
+#' @param x Dataset or lazy database query.
+#' @param qid Optional string query identifier.
+#' @param format Output format type, either via `data.table`, `dtplyr`, or `tibble`.
 #'
-#' @return A queried database connection stored in local memory and the time it took to pull into memory.
+#' @return A queried database connection stored in local memory and the time it took to pull into memory. Alternatively provides the time to process a piped workflow or single function if the input dataset is not a lazy database connection.
 #' @export
 #'
 #' @examples
-#' utas_tbl('students.campuses') %>%
-#'   collectable(qid = 'campus metadata',
+#' \dontrun{
+#' dplyr::tbl(connection,
+#'            dbplyr::in_schema("SCHEMA",
+#'                              "TABLE_NAME")) %>%
+#'   collectable(qid = "an impossible and certainly fake query",
 #'               format = 'tibble')
+#' }
 #'
 
 collectable <- function(x,
                         qid = 'query',
-                        format = 'dt') {
+                        format = 'tibble') {
 
   if (is.null(qid) || is.na(qid)) {
     qid = 'query'
   }
 
-  tictoc::tic(paste0('Time to collect ', qid))
+  tictoc::tic(paste0('Time to process ', qid))
 
   output <- if (format %in% c('data.table', 'dt')) {
     x %>%
@@ -46,6 +50,6 @@ collectable <- function(x,
 
 
 #' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-08-26 : 2021-08-06
+#' DATE        : 2021-09-04 : 2021-08-06
 #' NOTES       :
 #' TODO        : Reconsider how format is chosen.

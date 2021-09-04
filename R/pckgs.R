@@ -1,22 +1,22 @@
-#' package_check
+#' pkgs
 #'
 #' Install and/or load any necessary libraries, or skip if they are already loaded.
 #'
-#' @param packages chr : Single character or character vector with package/library names
-#' @param quiet lgl : Boolean whether to show which packages were installed, loaded, or skipped, as well as their version numbers.
-#' @param repos chr : Specified repo web address to attempt to pull uninstalled libraries from.
+#' @param packages Single character or character vector with package/library names
+#' @param quiet Logical whether to show which packages were installed, loaded, or skipped, as well as their version numbers.
+#' @param repos Specified repo web address to attempt to pull uninstalled libraries from.
 #'
-#' @return Installs and/or loads libraries on the backend.
+#' @return Environmental conditions: Installs and/or loads libraries where necessary.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' packacge_check(c('tidyverse', 'utastoolkit'))
+#' miao::pckgs(c('miao', 'tidyverse'))
 #' }
 
-package_check <- function(packages,
-                          quiet = FALSE,
-                          repos = c("https://cloud.r-project.org")) {
+pkgs <- package_check <- function(packages,
+                                  quiet = FALSE,
+                                  repos = c("https://cloud.r-project.org")) {
 
   for (package in packages) {
     ## SKIP CHECK ####
@@ -53,9 +53,9 @@ package_check <- function(packages,
   }
 }
 
-#' FUNCTION    : package_check
+#' FUNCTION    :
 #' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-08-26 : 2021-03-29 (est.)
+#' DATE        : 2021-09-04 : 2021-03-29 (est.)
 #' DESCRIPTION : Installs (if necessary) and loads (if necessary) vector of libraries
 #' NOTES       : Set repos to NA if using the `renv` library for package control
 #' TODO        :

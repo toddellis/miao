@@ -4,24 +4,28 @@
 \alias{collectable}
 \title{collectable}
 \usage{
-collectable(x, qid = "query", format = "dt")
+collectable(x, qid = "query", format = "tibble")
 }
 \arguments{
-\item{x}{: dataset}
+\item{x}{Dataset or lazy database query.}
 
-\item{qid}{chr: optional query identifier to assign to query}
+\item{qid}{Optional string query identifier.}
 
-\item{format}{chr: output format type, either via `data.table`, `dtplyr`, or `tibble`}
+\item{format}{Output format type, either via `data.table`, `dtplyr`, or `tibble`.}
 }
 \value{
-A queried database connection stored in local memory and the time it took to pull into memory.
+A queried database connection stored in local memory and the time it took to pull into memory. Alternatively provides the time to process a piped workflow or single function if the input dataset is not a lazy database connection.
 }
 \description{
 Wraps a timer around functions that pulls a lazy database query into memory.
 }
 \examples{
-utas_tbl('students.campuses') \%>\%
-  collectable(qid = 'campus metadata',
+\dontrun{
+dplyr::tbl(connection,
+           dbplyr::in_schema("SCHEMA",
+                             "TABLE_NAME")) \%>\%
+  collectable(qid = "an impossible and certainly fake query",
               format = 'tibble')
+}
 
 }

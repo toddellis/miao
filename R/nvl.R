@@ -20,3 +20,9 @@ nvl <- function(x,
          x)
 
 }
+
+
+#' AUTHOR      : todd.ellis@utas.edu.au
+#' DATE        : 2021-09-03
+#' NOTES       : Based on Jered's described SQL function -- unsure if his or Oracle's.
+#' TODO        :

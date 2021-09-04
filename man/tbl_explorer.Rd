@@ -11,16 +11,18 @@ tbl_explorer(x, min = 1, drop_numeric = FALSE)
 
 \item{min}{Numeric cutoff point for minimum number of observation occurrences. Can be a proportion or an integer value.}
 
-\item{drop_numeric}{Logical argument to drop numeric columns with a lot of variability}
+\item{drop_numeric}{Logical argument to drop numeric columns with a lot of variability.}
 }
 \value{
 A dataframe with column and value counts.
 }
 \description{
-Counts all unique values in an entire dataset across all columns
+Counts all unique values in an entire dataset across all columns.
 }
 \examples{
-utas_tbl('students.campuses') \%>\%
-  tbl_exporer()
+tibble::tibble(a = c('A','B', NA),
+               b = c(1.2, 1.2, 1.2),
+               c = c(4.5, NA, NA)) \%>\%
+ tbl_explorer()
 
 }

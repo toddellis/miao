@@ -1,4 +1,4 @@
-#' count_na
+#' tbl_na
 #'
 #' Check the number of NAs for all columns and provide a summary view.
 #'
@@ -16,9 +16,9 @@
 #'     count_na(pivot = TRUE,
 #'              drop_zeros = FALSE)
 
-count_na <- function(x,
-                     pivot = TRUE,
-                     drop_zeros = TRUE) {
+tbl_na <- function(x,
+                   pivot = TRUE,
+                   drop_zeros = TRUE) {
 
   output <- x %>%
     dplyr::summarise(dplyr::across(.cols = tidyselect::everything(),
@@ -67,7 +67,7 @@ count_na <- function(x,
 
 }
 
-#' FUNCTION    : count_na
+#' FUNCTION    : tbl_na
 #' AUTHOR      : todd.ellis@utas.edu.au
 #' DATE        : 2021-09-04 : 2021-08-02
 #' DESCRIPTION : Check the number of NAs for all columns

@@ -7,16 +7,16 @@
 bind_limits(x, lwr = 0, upr = 1, inverse = FALSE)
 }
 \arguments{
-\item{x}{dbl : numeric timeseries variable}
+\item{x}{Numeric vector.}
 
-\item{lwr}{dbl : lower bounds for transforming x}
+\item{lwr}{Lower bounds for transforming x.}
 
-\item{upr}{dbl : upper bounds for transforming x}
+\item{upr}{Upper bounds for transforming x.}
 
-\item{inverse}{lgl : flag for scaling data to fit bounds or transforming it back to the original scale}
+\item{inverse}{Logical for backtransforming the data to the original scale.}
 }
 \value{
-A vector of the input transformed to recognize upper and lower bound limits
+A vector of the input transformed to recognize upper and lower bound limits.
 }
 \description{
 Set lower and upper bounds for data. E.g., 0-100% to fit a logistic curve.

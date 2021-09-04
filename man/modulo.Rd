@@ -9,7 +9,7 @@ modulo(x, res = 1)
 \arguments{
 \item{x}{Numeric vector to scale.}
 
-\item{res}{Base resolution to scale x to.}
+\item{res}{Base resolution to scale x to using a modulo operation.}
 }
 \value{
 Scaled vector.
