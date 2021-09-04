@@ -11,6 +11,8 @@
 #' @return Dataframe of all relevant trend statistics from the Sen-Theil, Mann-Kendall, and Kendall families of statistics.
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' \dontrun{
 #' dummy <- tibble::tibble(YEAR = c(2000:2020)) %>%

@@ -9,6 +9,8 @@
 #' @return A queried database connection stored in local memory and the time it took to pull into memory. Alternatively provides the time to process a piped workflow or single function if the input dataset is not a lazy database connection.
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' \dontrun{
 #' dplyr::tbl(connection,

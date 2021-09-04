@@ -9,6 +9,8 @@
 #' @return Wide or long format dataframe with the count of zeros across all the columns in the original dataset.
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' tibble::tibble(a = c(1, 2, NA),
 #'                b = c(NA, NA, 'Q'),

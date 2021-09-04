@@ -12,6 +12,7 @@
 #' @export
 #'
 #' @importFrom magrittr %>%
+#'
 #' @examples
 #' \dontrun{
 #'  pal_sf(book = 'green eyes',

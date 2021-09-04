@@ -8,6 +8,8 @@
 #' @return A dataframe with the number of distinct observations and total observations per column.
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' tibble::tibble(a = c('A','B', NA),
 #'                b = c(1.2, 1.2, 1.2),

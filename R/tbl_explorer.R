@@ -9,6 +9,8 @@
 #' @return A dataframe with column and value counts.
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' tibble::tibble(a = c('A','B', NA),
 #'                b = c(1.2, 1.2, 1.2),
