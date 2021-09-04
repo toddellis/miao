@@ -231,35 +231,35 @@ trends <-  function(x,
 
   ## If Sen-Theil and Mann-Kendall p-values are identical, combine them in the output.
   if (.bsen_p == .mks_p & .bsen_z == .mks_z) {
-    df_output <- tibble(.n,
-                        .bsen,
-                        .bsen_lwr,
-                        .bsen_upr,
-                        .mks,
-                        .mks_sg,
-                        .mks_var,
-                        .ktau,
-                        .ktau_d,
-                        .z = .mks_z,
-                        .p = .mks_p)
+    df_output <- tibble::tibble(.n,
+                                .bsen,
+                                .bsen_lwr,
+                                .bsen_upr,
+                                .mks,
+                                .mks_sg,
+                                .mks_var,
+                                .ktau,
+                                .ktau_d,
+                                .z = .mks_z,
+                                .p = .mks_p)
     ## Otherwise, spit out both methods p-values.
     ## N.B. Not sure which one represents Kendall's tau.
     ##      Kendall's tau is originally only calculated in trend::mk.test, but is not influenced by `continuity`. `mk.test` only spits out one p-value.
     ##      trend::sens.slope *always* takes `continuity = TRUE` into account when calculating the p-value for the Sen-Theil slope estimator.
   } else {
-    df_output <- tibble(.n,
-                        .bsen,
-                        .bsen_lwr,
-                        .bsen_upr,
-                        .bsen_z,
-                        .bsen_p,
-                        .mks,
-                        .mks_sg,
-                        .mks_var,
-                        .mks_z,
-                        .mks_p,
-                        .ktau,
-                        .ktau_d)
+    df_output <- tibble::tibble(.n,
+                                .bsen,
+                                .bsen_lwr,
+                                .bsen_upr,
+                                .bsen_z,
+                                .bsen_p,
+                                .mks,
+                                .mks_sg,
+                                .mks_var,
+                                .mks_z,
+                                .mks_p,
+                                .ktau,
+                                .ktau_d)
   }
   ## RETURN TIBBLE OUTPUT ####
   return(df_output)
