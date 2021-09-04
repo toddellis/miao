@@ -42,7 +42,7 @@ tbl_explorer <- function(x,
                  name = '.count') %>%
     dplyr::arrange(.group_id, -.count) %>%
     dplyr::group_by(.group_id) %>%
-    dplyr::mutate(.rn = dplyr::cur_group_rows(),
+    dplyr::mutate(.rn = dplyr::row_number(),
                   .nrow = dplyr::n()) %>%
     dplyr::ungroup()
 

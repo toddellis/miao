@@ -23,6 +23,6 @@ Check the number of NAs for all columns and provide a summary view.
 tibble::tibble(a = c(1, 2, NA),
                b = c(NA, NA, 'Q'),
                c = c(3, 2, 1)) \%>\%
-    count_na(pivot = TRUE,
-             drop_zeros = FALSE)
+    tbl_na(pivot = TRUE,
+           drop_zeros = FALSE)
 }

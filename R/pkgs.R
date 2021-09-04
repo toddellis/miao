@@ -11,12 +11,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' miao::pckgs(c('miao', 'tidyverse'))
+#' miao::pkgs(c('miao', 'tidyverse'))
 #' }
 
-pkgs <- package_check <- function(packages,
-                                  quiet = FALSE,
-                                  repos = c("https://cloud.r-project.org")) {
+pkgs <- pckgs <- function(packages,
+                          quiet = FALSE,
+                          repos = c("https://cloud.r-project.org")) {
 
   for (package in packages) {
     ## SKIP CHECK ####
