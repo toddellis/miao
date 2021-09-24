@@ -109,9 +109,9 @@ survey_monkey = function(survey,
     ## N.B. This is likely custom to a specific survey and will likely have no effect on most datasets...
     dplyr::mutate(.colname = ifelse(.key == "Any comments?",
                                     stringr::str_c(.colname, ' Any comments?'),
-                                    .colname)) %>%
+                                    .colname)) # %>%
     ## Remove the key column
-    dplyr::select(-.key)
+    # dplyr::select(-.key)
 
   ## Check for multi-part questions or open-answer text.
   if (max(output %>%
@@ -146,7 +146,7 @@ survey_monkey = function(survey,
   } else {
     output <- output %>%
       dplyr::select(tidyselect::any_of(cols_to_keep),
-                    .qid, .colname, .response)
+                    .qid, .colname, .key, .response)
   }
 
   output <- output %>%
