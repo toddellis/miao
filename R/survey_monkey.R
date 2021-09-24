@@ -100,6 +100,9 @@ survey_monkey = function(survey,
     ## Fill down using the question text
     tidyr::fill(.colname,
                 .direction = 'down') %>%
+    ## Create a factored question ID to keep the original column order
+    dplyr::mutate(.qid = as.numeric(factor(.colname,
+                                           levels = unique(.$.colname)))) %>%
     ## Remove empty cells where respondents did not provide an answer
     dplyr::filter(!is.na(.response)) %>%
     ## Separate open answer questions
@@ -134,12 +137,16 @@ survey_monkey = function(survey,
 
     output <- output %>%
       dplyr::group_by(!! dplyr::sym(dplyr::first(cols_to_id)),
-                      .colname) %>%
+                      .qid) %>%
       dplyr::slice(1) %>%
       tidyr::pivot_wider(id_cols = tidyselect::any_of(cols_to_keep),
                          names_from = .colname,
                          values_from = .response)
 
+  } else {
+    output <- output %>%
+      dplyr::select(tidyselect::any_of(cols_to_keep),
+                    .qid, .colname, .response)
   }
 
   output <- output %>%
