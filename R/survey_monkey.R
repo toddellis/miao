@@ -71,13 +71,25 @@ survey_monkey = function(survey,
     dplyr::mutate(.colname = ifelse(.key == "Any comments?",
                                     str_c(.colname, ' Any comments?'),
                                     .colname))
+
+  ## Check for multi-part questions or open-answer text.
+  if (max(output %>%
+          group_by(RID, .colname) %>%
+          summarise(N = n_distinct(.response)) %>%
+          pull(N)) >= 2) {
+
+    warning('Multiple responses were found for single respondent-question answers, suggesting multi-part questions or open-text responses. Check unique combinations of questions and responses to find these issues.')
+
+  }
+
   if (pivot) {
-    output %>%
+    output <- output %>%
       tidyr::pivot_wider(id_cols = c(RID),
                          names_from = .colname,
                          values_from = .response)
-  } else {
-    output
+
   }
+
+  return(output)
 
 }
