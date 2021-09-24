@@ -142,6 +142,12 @@ survey_monkey = function(survey,
 
   }
 
+  output <- output %>%
+    dplyr::rename_with(.cols = tidyselect::any_of(cols_to_keep),
+                       .fn = ~ stringr::str_replace_all(toupper(.),
+                                                        ' ',
+                                                        '_'))
+
   return(output)
 
 }
