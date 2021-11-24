@@ -22,6 +22,8 @@ tbl_na <- function(x,
                    pivot = TRUE,
                    drop_zeros = TRUE) {
 
+  var_nrow = nrow(x)
+
   output <- x %>%
     dplyr::summarise(dplyr::across(.cols = tidyselect::everything(),
                                    .fns = ~ sum(is.na(.x))),
@@ -45,6 +47,11 @@ tbl_na <- function(x,
 
   }
 
+  output <-
+    output %>%
+    dplyr::mutate(.percent = round((.sum / var_nrow) * 100,
+                                   2))
+
   if (drop_zeros) {
 
     output <- output %>%
@@ -59,9 +66,12 @@ tbl_na <- function(x,
   } else {
 
     output %>%
-      tidyr::pivot_wider(id_cols = tidyselect::all_of(.grp),
+      tidyr::pivot_longer(cols = c(.sum, .percent),
+                          names_to = '.metric',
+                          values_to = '.value') %>%
+      tidyr::pivot_wider(id_cols = c(tidyselect::all_of(.grp), .metric),
                          names_from = .col,
-                         values_from = .sum)
+                         values_from = .value)
 
   }
 
@@ -71,7 +81,7 @@ tbl_na <- function(x,
 
 #' FUNCTION    : tbl_na
 #' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-09-04 : 2021-08-02
+#' DATE        : 2021-11-24 : 2021-08-02
 #' DESCRIPTION : Check the number of NAs for all columns
 #' NOTES       : Loosely based on suggestions via https://sebastiansauer.github.io/sum-isna/
 #' TODO        :
