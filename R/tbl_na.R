@@ -22,7 +22,7 @@ tbl_na <- function(x,
                    pivot = TRUE,
                    drop_zeros = TRUE) {
 
-  var_nrow = nrow(x)
+  .nrow = nrow(x)
 
   output <- x %>%
     dplyr::summarise(dplyr::across(.cols = tidyselect::everything(),
@@ -49,7 +49,7 @@ tbl_na <- function(x,
 
   output <-
     output %>%
-    dplyr::mutate(.percent = round((.sum / var_nrow) * 100,
+    dplyr::mutate(.percent = round((.sum / .nrow) * 100,
                                    2))
 
   if (drop_zeros) {
