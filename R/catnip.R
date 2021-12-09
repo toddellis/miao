@@ -23,8 +23,6 @@ catnip <- function(data, x,
   .groups =
     dplyr::group_vars(data)
 
-  print(class({{ data |> head() |> dplyr::pull({{ x }}) }}))
-
   data %>%
     dplyr::summarise(.n = n(),
                      .median = ggplot2::median_hilow({{ x }},
