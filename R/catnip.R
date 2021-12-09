@@ -24,33 +24,31 @@ catnip <- function(data, x,
     dplyr::group_vars(data)
 
   data %>%
-    dplyr::summarise(.n = n(),
-                     .median = ggplot2::median_hilow({{ x }},
-                                                     conf.int = conf_int) |>
-                       dplyr::rename(.median = y,
-                                     .lwr.quantile = ymin,
-                                     .upr.quantile = ymax),
+    dplyr::summarise(.count = n(),
+                     .distinct = dplyr::n_distinct({{ x }}),
+                     .na = sum(is.na({{ x }})),
                      .boot = ggplot2::mean_cl_boot({{ x }},
                                                    conf.int = conf_int) |>
                        dplyr::rename(.mean = y,
-                                     .lwr.boot = ymin,
-                                     .upr.boot = ymax),
+                                     .ci.lwr.boot = ymin,
+                                     .ci.upr.boot = ymax),
                      .normal = ggplot2::mean_cl_normal({{ x }},
                                                        conf.int = conf_int) |>
-                       dplyr::select(.lwr.normal = ymin,
-                                     .upr.normal = ymax),
+                       dplyr::select(.ci.lwr.normal = ymin,
+                                     .ci.upr.normal = ymax),
+                     .min = min({{ x }}, na.rm = TRUE),
+                     .p025 = quantile({{ x }}, probs = 0.025, na.rm = TRUE),
+                     .p05 = quantile({{ x }}, probs = 0.05, na.rm = TRUE),
+                     .q1 = quantile({{ x }}, probs = 0.25, na.rm = TRUE),
+                     .median = median({{ x }}, na.rm = TRUE),
+                     .q3 = quantile({{ x }}, probs = 0.75, na.rm = TRUE),
+                     .p95 = quantile({{ x }}, probs = 0.95, na.rm = TRUE),
+                     .p975 = quantile({{ x }}, probs = 0.975, na.rm = TRUE),
+                     .max = max({{ x }}, na.rm = TRUE),
                      .var = var({{ x }}, na.rm = TRUE),
                      .sd = sd({{ x }}, na.rm = TRUE),
                      .se = sd({{ x }}) / sqrt(n()),
-                     .min = min({{ x }}, na.rm = TRUE),
-                     .max = max({{ x }}, na.rm = TRUE),
-                     .perc.05 = quantile({{ x }}, probs = 0.05, na.rm = TRUE),
-                     .perc.25 = quantile({{ x }}, probs = 0.25, na.rm = TRUE),
-                     .perc.75 = quantile({{ x }}, probs = 0.75, na.rm = TRUE),
-                     .perc.95 = quantile({{ x }}, probs = 0.95, na.rm = TRUE),
-                     .distinct = dplyr::n_distinct({{ x }}),
-                     .na = sum(is.na({{ x }})),
                      .groups = 'drop') |>
-    tidyr::unnest(cols = c(.median, .boot, .normal)) |>
-    dplyr::select(tidyselect::all_of(.groups), .n, .distinct, .median, .mean, .min, .max, .var, .sd, .se, .lwr.boot, .upr.boot, .perc.05, .perc.25, .perc.75, .perc.95, .lwr.normal, .upr.normal, .lwr.quantile, .upr.quantile, .na)
-}
+    tidyr::unnest(cols = c(.median, .boot, .normal))
+
+  }
