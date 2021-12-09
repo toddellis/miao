@@ -1,4 +1,4 @@
-#' trends
+#' trrrends
 #'
 #' Applies a family of trend statistics: The Mann-Kendall S statistic, the Sen-Theil slope estimator, and Kendall's tau.
 #'
@@ -35,7 +35,7 @@
 #'    dplyr::mutate(RANDOM = ifelse(RANDOM >= 80,
 #'                                  NA,
 #'                                  RANDOM)) %>%
-#'    dplyr::summarise(trends(RANDOM,
+#'    dplyr::summarise(trrrends(RANDOM,
 #'                            conf_level = 0.95,
 #'                            alt_hypo = 'two-tailed',
 #'                            continuity = TRUE,
@@ -44,7 +44,7 @@
 #' }
 #'
 
-trends <-  function(x,
+trrrends <-  function(x,
                     conf_level = 0.95,
                     alt_hypo = c("two-tailed",
                                  "greater",
