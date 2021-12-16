@@ -1,7 +1,7 @@
 Package: miao
 Type: Package
 Title: Miao! Miauw! Miaow! Miaou! Mjau! Meow!
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: 
     person(given = "Todd",
            family = "Ellis",
@@ -22,8 +22,10 @@ Imports:
 	grDevices,
 	magrittr,
 	stringr,
+	textdata,
 	tibble,
 	tictoc,
 	tidyr,
 	tidyselect,
+	tidytext,
 	zoo
