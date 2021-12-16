@@ -4,7 +4,7 @@
 \alias{create_project}
 \title{create_project}
 \usage{
-create_project()
+create_project(quiet = FALSE)
 }
 \description{
 Creates common folder structure for new projects for consistency.
