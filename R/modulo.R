@@ -15,14 +15,16 @@
 #'
 
 modulo <- function(x,
-                   res = 1) {
+                   res = 1,
+                   center = TRUE) {
 
-  x - (x %% res)
+  output <-
+    x - (x %% res)
+
+  if (center) {
+    output + (res / 2)
+  } else {
+    output
+  }
 
 }
-
-
-#' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-09-03
-#' NOTES       : I can't believe I never made this before.
-#' TODO        :

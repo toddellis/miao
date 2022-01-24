@@ -1,7 +1,7 @@
 Package: miao
 Type: Package
 Title: Miao! Miauw! Miaow! Miaou! Mjau! Meow!
-Version: 0.1.8
+Version: 0.1.9
 Authors@R: 
     person(given = "Todd",
            family = "Ellis",

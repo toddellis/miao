@@ -4,7 +4,7 @@
 \alias{modulo}
 \title{modulo}
 \usage{
-modulo(x, res = 1)
+modulo(x, res = 1, center = TRUE)
 }
 \arguments{
 \item{x}{Numeric vector to scale.}
