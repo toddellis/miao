@@ -21,6 +21,6 @@ Install and/or load any necessary libraries, or skip if they are already loaded.
 }
 \examples{
 \dontrun{
-miao::pkgs(c('miao', 'tidyverse'))
+miao::pkgs(c('toddellis/miao', 'tidyverse'))
 }
 }
