@@ -17,15 +17,51 @@
 #'
 
 summarise_sentiment <- function(data,
-                                x) {
+                                x,
+                                line_length = 0,
+                                lex_stop = c('all', 'none', 'onix', 'smart', 'snowball')) {
 
-  .base <-
-    data |>
-    tidytext::unnest_tokens(word, {{ x }})
+  .line_length <-
+    line_length
+
+  if (.line_length > 0) {
+    .base <-
+      data |>
+      dplyr::mutate(line = dplyr::row_number()) |>
+      dplyr::mutate(line_set = modulo(line,
+                                      .line_length,
+                                      center = FALSE)) |>
+      dplyr::group_by(line_set,
+                      .add = TRUE)
+  } else {
+    .base <-
+      data
+  }
+
 
   .groups <-
-    dplyr::group_vars(data)
+    dplyr::group_vars(.base)
 
+  .base <-
+    .base |>
+    tidytext::unnest_tokens(word, {{ x }})
+
+  .lexicon_stop_words <- match.arg(lex_stop)
+
+  if (.lexicon_stop_words == 'all') {
+    .base <-
+      .base |>
+      dplyr::anti_join(tidytext::stop_words |>
+                         dplyr::distinct(),
+                       by = 'word')
+  } else if (!.lexicon_stop_words %in% c('all', 'none')) {
+    .base <-
+      .base |>
+      dplyr::anti_join(tidytext::stop_words |>
+                         dplyr::filter(tolower(lexicon) %in% c(.lexicon_stop_words)) |>
+                         dplyr::distinct(),
+                       by = 'word')
+  }
   ## Wordcount
   .wordcount <-
     .base |>

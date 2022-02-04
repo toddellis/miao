@@ -89,10 +89,3 @@ pkgs <- pckgs <- function(packages,
     }
   }
 }
-
-#' FUNCTION    :
-#' AUTHOR      : todd.ellis@utas.edu.au
-#' DATE        : 2021-09-04 : 2021-03-29 (est.)
-#' DESCRIPTION : Installs (if necessary) and loads (if necessary) vector of libraries
-#' NOTES       : Set repos to NA if using the `renv` library for package control
-#' TODO        :

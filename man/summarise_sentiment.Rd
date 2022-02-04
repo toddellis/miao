@@ -5,9 +5,19 @@
 \alias{summarize_sentiment}
 \title{summarise_sentiment}
 \usage{
-summarise_sentiment(data, x)
+summarise_sentiment(
+  data,
+  x,
+  line_length = 0,
+  lex_stop = c("all", "none", "onix", "smart", "snowball")
+)
 
-summarize_sentiment(data, x)
+summarize_sentiment(
+  data,
+  x,
+  line_length = 0,
+  lex_stop = c("all", "none", "onix", "smart", "snowball")
+)
 }
 \arguments{
 \item{data}{dataframe object}
