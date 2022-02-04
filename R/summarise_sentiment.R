@@ -65,7 +65,7 @@ summarise_sentiment <- function(data,
   ## Wordcount
   .wordcount <-
     .base |>
-    dplyr::summarise(wordcount = n(),
+    dplyr::summarise(wordcount = dplyr::n(),
                      .groups = 'drop')
 
   ## Bing library
