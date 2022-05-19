@@ -1,7 +1,7 @@
 Package: miao
 Type: Package
 Title: Miao! Miauw! Miaow! Miaou! Mjau! Meow!
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person(given = "Todd",
            family = "Ellis",
@@ -21,6 +21,7 @@ Imports:
 	dtplyr,
 	grDevices,
 	magrittr,
+	sf,
 	stringr,
 	textdata,
 	tibble,

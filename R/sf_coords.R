@@ -17,5 +17,5 @@ sf_coords <- function(x) {
     dplyr::bind_cols(x |>
                        sf::st_point_on_surface() |>
                        sf::st_coordinates()) |>
-    dplyr::rename(x = X, y = y)
+    dplyr::rename(x = X, y = Y)
 }
