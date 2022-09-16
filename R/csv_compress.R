@@ -4,7 +4,7 @@
 #'
 #' @param folder Source / destination folder for compressing .csv files.
 #'
-#' @return
+#' @return Compressed files in the specified location.
 #' @export
 #'
 #' @examples

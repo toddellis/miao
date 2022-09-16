@@ -18,6 +18,8 @@ Dataframe with model/term metrics.
 Wrapped for 2x broom::tidy as applied to a GAM object, pulling both parametric and smooth terms.
 }
 \examples{
+\dontrun{
+}
 
 
 }

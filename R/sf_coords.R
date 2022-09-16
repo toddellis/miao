@@ -4,7 +4,7 @@
 #'
 #' @param x sf feature type.
 #'
-#' @return
+#' @return Dataframe with added columns representing centroid x-y coordinates.
 #' @export
 #'
 #' @examples
@@ -13,9 +13,20 @@
 #'
 
 sf_coords <- function(x) {
-  x |>
-    dplyr::bind_cols(x |>
-                       sf::st_point_on_surface() |>
-                       sf::st_coordinates()) |>
-    dplyr::rename(x = X, y = Y)
+  suppressWarnings(
+    output <-
+      x |>
+      dplyr::bind_cols(x |>
+                         sf::st_point_on_surface() |>
+                         sf::st_coordinates()) |>
+      tibble::as_tibble()
+  )
+
+  tryCatch({
+    output |>
+      dplyr::rename(x = X, y = Y)
+  },
+  error = function(cond) {
+    output
+  })
 }

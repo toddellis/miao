@@ -10,7 +10,7 @@ csv_compress(folder)
 \item{folder}{Source / destination folder for compressing .csv files.}
 }
 \value{
-
+Compressed files in the specified location.
 }
 \description{
 Read a folder of .csv files and compress them individually to .gz
