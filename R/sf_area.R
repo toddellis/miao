@@ -12,7 +12,7 @@
 #' }
 #'
 
-sf_coords <- function(x) {
+sf_area <- function(x) {
   suppressWarnings(
     x |>
       dplyr::bind_cols(x |>
