@@ -23,7 +23,8 @@ theme_meow <- function(axis.title = 10,
                        axis.text = 7.5,
                        strip.text = 7,
                        legend.text = 9.25,
-                       strip.background = "white",
+                       strip.bg = "white",
+                       plot.bg = "white",
                        line.col = "#838383") {
   cowplot::theme_cowplot() +
     theme(
@@ -34,8 +35,10 @@ theme_meow <- function(axis.title = 10,
       axis.line.x = element_line(colour = line.col),
       axis.text = element_text(size = axis.text),
       axis.title = element_text(size = axis.title),
-      strip.background = element_rect(fill = strip.background),
+      strip.background = element_rect(fill = strip.bg),
       strip.text = element_text(size = strip.text),
-      legend.text = element_text(size = legend.text)
+      legend.text = element_text(size = legend.text),
+      panel.background = element_rect(fill = plot.bg),
+      plot.background = element_rect(fill = plot.bg)
     )
 }
