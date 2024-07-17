@@ -9,7 +9,8 @@ theme_meow(
   axis.text = 7.5,
   strip.text = 7,
   legend.text = 9.25,
-  strip.background = "white",
+  strip.bg = "white",
+  plot.bg = "white",
   line.col = "#838383"
 )
 }
