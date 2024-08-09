@@ -17,7 +17,11 @@ Quick and tidy-friendly adaptation of {car}'s `vif()`. Returns a dataframe with 
 }
 \examples{
 \dontrun{
+
+  mtcars |>
+    lm(mpg ~ .,
+       data = _) |>
+    tidy_vif()
+
 }
-
-
 }

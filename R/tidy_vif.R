@@ -9,9 +9,13 @@
 #'
 #' @examples
 #' \dontrun{
+#'
+#'   mtcars |>
+#'     lm(mpg ~ .,
+#'        data = _) |>
+#'     tidy_vif()
+#'
 #' }
-#'
-#'
 
 tidy_vif <- function(mod) {
 
@@ -22,7 +26,7 @@ tidy_vif <- function(mod) {
     tibble::rownames_to_column("predictor") |>
     dplyr::rename(vif = 2) |>
     dplyr::mutate(tolerance = 1 / vif,
-                  flag_intolerant = vif <= 5 | tolerance >= 0.2)
+                  multicollinearity = vif >= 5 | tolerance <= 0.2)
 
   return(.df)
 
