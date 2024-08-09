@@ -4,7 +4,7 @@
 \alias{sf_dims}
 \title{sf_dims}
 \usage{
-sf_dims(x)
+sf_dims(x, vars = c("all", "basic", "lines"))
 }
 \arguments{
 \item{x}{sf feature type.}

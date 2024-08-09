@@ -12,24 +12,61 @@
 #' }
 #'
 
-sf_dims <- function(x) {
-  suppressWarnings(
-    x |>
-      dplyr::bind_cols(x |>
-                         sf::st_area() |>
-                         tibble::as_tibble() |>
-                         dplyr::rename(area = value) |>
-                         dplyr::mutate(area = as.numeric(area))) |>
-      dplyr::bind_cols(x |>
-                         sf::st_length() |>
-                         tibble::as_tibble() |>
-                         dplyr::rename(length = value) |>
-                         dplyr::mutate(length = as.numeric(length))) |>
-      dplyr::bind_cols(x |>
-                         sf::st_perimeter() |>
-                         tibble::as_tibble() |>
-                         dplyr::rename(perimeter = value) |>
-                         dplyr::mutate(perimeter = as.numeric(perimeter)))
-  )
+sf_dims <- function(x, vars = c("all", "basic", "lines")) {
+
+  .df <-
+    x
+
+  if (vars %in% c("basic", "all")) {
+
+    .df$AREA <-
+      as.numeric(sf::st_area(.df))
+
+    .df$PERIMETER <-
+      as.numeric(sf::st_perimeter(.df))
+
+    if (vars == "all") {
+
+      .df$COMPACTNESS_RATIO <-
+        .df$AREA / .df$PERIMETER
+
+      .df$PERIMETER_AREA_RATIO <-
+        .df$PERIMETER / .df$AREA
+
+      .df$CIRCULARITY_RATIO <-
+        (4 * pi * .df$AREA) / (.df$PERIMETER^2)
+
+      .df$SHAPE_COMPLEXITY_INDEX <-
+        1 - .df$PERIMETER / as.numeric(sf::st_area(sf::st_convex_hull(.df$geom)))
+
+    }
+  } else {
+
+    ## TODO: Consider adding sinuosity -- see: https://gis.stackexchange.com/questions/334417/calculate-the-sinuoisty-of-a-line
+    .df$LENGTH <-
+      as.numeric(sf::st_length(.df))
+
+  }
+
+  return(.df)
+
+  # suppressWarnings(
+  #   x |>
+  #     dplyr::bind_cols(x |>
+  #                        sf::st_area() |>
+  #                        tibble::as_tibble() |>
+  #                        dplyr::rename(area = value) |>
+  #                        dplyr::mutate(area = as.numeric(area))) |>
+  #     dplyr::bind_cols(x |>
+  #                        sf::st_length() |>
+  #                        tibble::as_tibble() |>
+  #                        dplyr::rename(length = value) |>
+  #                        dplyr::mutate(length = as.numeric(length))) |>
+  #     dplyr::bind_cols(x |>
+  #                        sf::st_perimeter() |>
+  #                        tibble::as_tibble() |>
+  #                        dplyr::rename(perimeter = value) |>
+  #                        dplyr::mutate(perimeter = as.numeric(perimeter)))
+  # )
 
 }
