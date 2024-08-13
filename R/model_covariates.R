@@ -33,6 +33,9 @@ model_covariates <- function(mod,
     mod |>
     dominance(...)
 
+  .max <-
+    max(.da$dominance, na.rm = TRUE)
+
   p1 <-
     .da |>
     ggplot2::ggplot(ggplot2::aes(x = dominance,
@@ -67,6 +70,9 @@ model_covariates <- function(mod,
 
   if (plot_vif) {
 
+    .max <-
+      round(max(.vif$vif))
+
     p3 <-
       .vif |>
       dplyr::mutate(fill = dplyr::recode(multicollinearity_code,
@@ -83,15 +89,15 @@ model_covariates <- function(mod,
                                                             mean,
                                                             .desc = TRUE),
                                    fill = fill)) +
-      ggplot2::geom_col() +
-      theme_meow() +
-      ggplot2::scale_fill_identity() +
-      ggplot2::geom_vline(xintercept = c(2, 3, 4, 5),
+      ggplot2::geom_vline(xintercept = c(2, 3, 4, 5, ifelse(.max > 5, 10, NA)),
                           linetype = "dashed",
                           alpha = 0.3,
                           size = 1.25) +
+      ggplot2::geom_col() +
+      theme_meow() +
+      ggplot2::scale_fill_identity() +
       ggplot2::coord_cartesian(xlim = c(1, NA_real_)) +
-      ggplot2::scale_x_continuous(n.breaks = round(max(.vif$vif))) +
+      ggplot2::scale_x_continuous(breaks = seq(1, ifelse(.max > 5, ifelse(.max > 10, .max, 10), 5), by = 1)) +
       ggplot2::labs(x = "Variance inflation score",
                     y = NULL)
 
