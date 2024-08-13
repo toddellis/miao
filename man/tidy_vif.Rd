@@ -13,7 +13,7 @@ tidy_vif(mod)
 Dataframe with model/term metrics.
 }
 \description{
-Quick and tidy-friendly adaptation of {car}'s `vif()`. Returns a dataframe with variance inflation, tolerance, and a flag identifying if either is beyond common cut-offs reflecting problematic input variables.
+Quick and tidy-friendly adaptation of {car}'s `vif()`. Returns a dataframe with variance inflation, tolerance, and a flag identifying if either is beyond common cut-offs reflecting problematic input variables. Note that VIF is not particularly useful when looking at categorical predictors, and will often report high VIF if any categories with a small sample size exist.
 }
 \examples{
 \dontrun{

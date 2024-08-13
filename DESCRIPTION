@@ -1,7 +1,7 @@
 Package: miao
 Type: Package
 Title: Miao! Miauw! Miaow! Miaou! Mjau! Meow!
-Version: 0.2.8
+Version: 0.2.9
 Authors@R: 
     person(given = "Todd",
            family = "Ellis",
@@ -20,9 +20,13 @@ Imports:
 	dbplyr,
 	dplyr,
 	dtplyr,
+	forcats,
+	ggdist,
+	ggplot2,
 	grDevices,
 	magrittr,
 	relaimpo,
+	patchwork,
 	sf,
 	smoothr,
 	stringr,

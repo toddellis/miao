@@ -19,26 +19,26 @@
 #'  theme_meow()
 #'
 
-theme_meow <- function(axis.title = 10,
-                       axis.text = 7.5,
-                       strip.text = 7,
-                       legend.text = 9.25,
+theme_meow <- function(axis.title = 14,
+                       axis.text = 10,
+                       strip.text = 10.5,
+                       legend.text = 10.25,
                        strip.bg = "white",
                        plot.bg = "white",
                        line.col = "#838383") {
   cowplot::theme_cowplot() +
-    theme(
+    ggplot2::theme(
       legend.position = 'bottom',
-      axis.ticks = element_line(colour = line.col),
-      axis.ticks.y = element_blank(),
-      axis.line.y = element_blank(),
-      axis.line.x = element_line(colour = line.col),
-      axis.text = element_text(size = axis.text),
-      axis.title = element_text(size = axis.title),
-      strip.background = element_rect(fill = strip.bg),
-      strip.text = element_text(size = strip.text),
-      legend.text = element_text(size = legend.text),
-      panel.background = element_rect(fill = plot.bg),
-      plot.background = element_rect(fill = plot.bg)
+      axis.ticks = ggplot2::element_line(colour = line.col),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.line.y = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_line(colour = line.col),
+      axis.text = ggplot2::element_text(size = axis.text),
+      axis.title = ggplot2::element_text(size = axis.title),
+      strip.background = ggplot2::element_rect(fill = strip.bg),
+      strip.text = ggplot2::element_text(size = strip.text),
+      legend.text = ggplot2::element_text(size = legend.text),
+      panel.background = ggplot2::element_rect(fill = plot.bg),
+      plot.background = ggplot2::element_rect(fill = plot.bg)
     )
 }

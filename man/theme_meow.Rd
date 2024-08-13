@@ -5,10 +5,10 @@
 \title{theme_meow}
 \usage{
 theme_meow(
-  axis.title = 10,
-  axis.text = 7.5,
-  strip.text = 7,
-  legend.text = 9.25,
+  axis.title = 14,
+  axis.text = 10,
+  strip.text = 10.5,
+  legend.text = 10.25,
   strip.bg = "white",
   plot.bg = "white",
   line.col = "#838383"
