@@ -38,6 +38,7 @@ model_covariates <- function(mod,
     ggplot2::ggplot(ggplot2::aes(x = dominance,
                                  y = forcats::fct_reorder(predictor,
                                                           rank,
+                                                          mean,
                                                           .desc = TRUE))) +
     ggdist::stat_slabinterval(point_interval = "mean_hdci",
                               density = "histogram",
@@ -45,13 +46,15 @@ model_covariates <- function(mod,
     theme_meow() +
     ggplot2::labs(x = "Relative importance",
                   y = NULL) +
-    ggplot2::scale_x_continuous(breaks = seq(0, 1, by = 0.1))
+    ggplot2::scale_x_continuous(breaks = seq(0, 1, by = 0.1),
+                                limits = c(0, NA_real_))
 
   p2 <-
     .da |>
     ggplot2::ggplot(ggplot2::aes(x = rank,
                                  y = forcats::fct_reorder(predictor,
                                                           rank,
+                                                          mean,
                                                           .desc = TRUE))) +
     ggdist::stat_slabinterval(point_interval = "mean_hdci",
                               density = "histogram",
