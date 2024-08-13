@@ -46,8 +46,7 @@ model_covariates <- function(mod,
     theme_meow() +
     ggplot2::labs(x = "Relative importance",
                   y = NULL) +
-    ggplot2::scale_x_continuous(breaks = seq(0, 1, by = 0.1),
-                                limits = c(0, NA_real_))
+    ggplot2::scale_x_continuous(limits = c(0, NA_real_))
 
   p2 <-
     .da |>
