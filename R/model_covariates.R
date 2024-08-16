@@ -50,6 +50,11 @@ model_covariates <- function(mod,
 
     if (inherits(mod, "gam")) {
 
+      if (min(.da$shared, na.rm = TRUE)) {
+        ## TODO: Investigate what this actually means.
+        warning("GAM dominance analysis reports some shared relative importance below 0.")
+      }
+
       p1 <-
         p0 +
         ggplot2::geom_col(fill = "#BFBFBF") +
@@ -104,6 +109,13 @@ model_covariates <- function(mod,
                                   breaks = length(unique(.da$predictor)),
                                   .width = c(0.5, 0.89))
 
+    }
+
+    if ((plot_rows == 2 & plot_vif) |
+        (plot_rows == 1)) {
+      p2 <-
+        p2 +
+        ggplot2::theme(axis.text.y = ggplot2::element_blank())
     }
 
     if (plot_vif) {
