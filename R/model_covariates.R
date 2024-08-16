@@ -85,7 +85,7 @@ model_covariates <- function(mod,
     } else {
 
       p1 <-
-        p1 +
+        p0 +
         ggdist::stat_slabinterval(point_interval = "mean_hdci",
                                   density = "histogram",
                                   fill = "#808080",
