@@ -29,89 +29,127 @@ model_covariates <- function(mod,
     mod |>
     tidy_vif()
 
-  .da <-
-    mod |>
-    dominance(...)
-
-  .max <-
-    max(.da$dominance, na.rm = TRUE)
-
-  p1 <-
-    .da |>
-    ggplot2::ggplot(ggplot2::aes(x = dominance,
-                                 y = forcats::fct_reorder(predictor,
-                                                          rank,
-                                                          mean,
-                                                          .desc = TRUE))) +
-    ggdist::stat_slabinterval(point_interval = "mean_hdci",
-                              density = "histogram",
-                              .width = c(0.5, 0.89)) +
-    theme_meow() +
-    ggplot2::labs(x = "Relative importance",
-                  y = NULL) +
-    ggplot2::scale_x_continuous(limits = c(0, NA_real_))
-
-  p2 <-
-    .da |>
-    ggplot2::ggplot(ggplot2::aes(x = rank,
-                                 y = forcats::fct_reorder(predictor,
-                                                          rank,
-                                                          mean,
-                                                          .desc = TRUE))) +
-    ggdist::stat_slabinterval(point_interval = "mean_hdci",
-                              density = "histogram",
-                              breaks = length(unique(.da$predictor)),
-                              .width = c(0.5, 0.89)) +
-    theme_meow() +
-    ggplot2::labs(x = "Rank",
-                  y = NULL) +
-    ggplot2::coord_cartesian(xlim = c(1, NA_real_)) +
-    ggplot2::scale_x_continuous(n.breaks = round(max(.da$rank)))
-
-  if (plot_vif) {
+    .da <-
+      mod |>
+      dominance(...)
 
     .max <-
-      round(max(.vif$vif))
+      max(.da$dominance, na.rm = TRUE)
 
-    p3 <-
-      .vif |>
-      dplyr::mutate(fill = dplyr::recode(multicollinearity_code,
-                                         "0" = "#64BF30",
-                                         "1" = "#64BF30",
-                                         "2" = "#64BF30",
-                                         "3" = "#FEDD3A",
-                                         "4" = "#F78100",
-                                         "5" = "#AD0909",
-                                         "6" = "#AD0909")) |>
-      ggplot2::ggplot(ggplot2::aes(x = vif,
+    p0 <-
+      .da |>
+      ggplot2::ggplot(ggplot2::aes(x = dominance,
                                    y = forcats::fct_reorder(predictor,
-                                                            vif,
+                                                            rank,
                                                             mean,
-                                                            .desc = TRUE),
-                                   fill = fill)) +
-      ggplot2::geom_vline(xintercept = c(2, 3, 4, 5, ifelse(.max > 5, 10, NA)),
-                          linetype = "dashed",
-                          alpha = 0.3,
-                          size = 1.25) +
-      ggplot2::geom_col() +
+                                                            .desc = TRUE))) +
       theme_meow() +
-      ggplot2::scale_fill_identity() +
-      ggplot2::coord_cartesian(xlim = c(1, NA_real_)) +
-      ggplot2::scale_x_continuous(breaks = seq(1, ifelse(.max > 5, ifelse(.max > 10, .max, 10), 5), by = 1)) +
-      ggplot2::labs(x = "Variance inflation score",
-                    y = NULL)
+      ggplot2::labs(x = "Relative importance",
+                    y = NULL) +
+      ggplot2::scale_x_continuous(limits = c(0, NA_real_))
 
-    print(patchwork::wrap_plots(p1 + p2 + p3 + patchwork::plot_layout(nrow = plot_rows))) |>
-      suppressWarnings()
+    if (inherits(mod, "gam")) {
 
-  } else {
+      p1 <-
+        p0 +
+        ggplot2::geom_col(fill = "#BFBFBF") +
+        ggplot2::geom_col(ggplot2::aes(x = unique),
+                          fill = "#808080")
 
-    print(.vif)
+      p2 <-
+        .da |>
+        dplyr::select(predictor, rank, unique, shared) |>
+        tidyr::pivot_longer(cols = c(unique, shared),
+                            names_to = "wt",
+                            values_to = "dominance") |>
+        ggplot2::ggplot(ggplot2::aes(x = dominance,
+                                     y = forcats::fct_reorder(predictor,
+                                                              rank,
+                                                              mean,
+                                                              .desc = TRUE))) +
+        theme_meow() +
+        ggplot2::labs(x = "Unique vs. shared importance",
+                      y = NULL) +
+        ggplot2::scale_x_continuous(labels = scales::percent,
+                                    limits = c(0, NA_real_)) +
+        ggplot2::geom_col(aes(fill = wt),
+                          show.legend = FALSE,
+                          position = "fill") +
+        ggplot2::scale_fill_manual(values = c("#BFBFBF", "#808080"))
 
-    print(patchwork::wrap_plots(p1 + p2 + patchwork::plot_layout(nrow = plot_rows))) |>
-      suppressWarnings()
+    } else {
+
+      p1 <-
+        p1 +
+        ggdist::stat_slabinterval(point_interval = "mean_hdci",
+                                  density = "histogram",
+                                  fill = "#808080",
+                                  .width = c(0.5, 0.89))
+
+      p2 <-
+        .da |>
+        ggplot2::ggplot(ggplot2::aes(x = rank,
+                                     y = forcats::fct_reorder(predictor,
+                                                              rank,
+                                                              mean,
+                                                              .desc = TRUE))) +
+        theme_meow() +
+        ggplot2::labs(x = "Rank",
+                      y = NULL) +
+        ggplot2::coord_cartesian(xlim = c(1, NA_real_)) +
+        ggplot2::scale_x_continuous(n.breaks = round(max(.da$rank))) +
+        ggdist::stat_slabinterval(point_interval = "mean_hdci",
+                                  density = "histogram",
+                                  fill = "#808080",
+                                  breaks = length(unique(.da$predictor)),
+                                  .width = c(0.5, 0.89))
+
+    }
+
+    if (plot_vif) {
+
+      .max <-
+        round(max(.vif$vif))
+
+      p3 <-
+        .vif |>
+        dplyr::mutate(fill = dplyr::recode(multicollinearity_code,
+                                           "0" = "#64BF30",
+                                           "1" = "#64BF30",
+                                           "2" = "#64BF30",
+                                           "3" = "#FEDD3A",
+                                           "4" = "#F78100",
+                                           "5" = "#AD0909",
+                                           "6" = "#AD0909")) |>
+        ggplot2::ggplot(ggplot2::aes(x = vif,
+                                     y = forcats::fct_reorder(predictor,
+                                                              vif,
+                                                              mean,
+                                                              .desc = TRUE),
+                                     fill = fill)) +
+        ggplot2::geom_vline(xintercept = c(2, 3, 4, 5, ifelse(.max > 5, 10, NA)),
+                            linetype = "dashed",
+                            alpha = 0.3,
+                            linewidth = 1.25) +
+        ggplot2::geom_col() +
+        theme_meow() +
+        ggplot2::scale_fill_identity() +
+        ggplot2::coord_cartesian(xlim = c(1, NA_real_)) +
+        ggplot2::scale_x_continuous(breaks = seq(1, ifelse(.max > 5, ifelse(.max > 10, .max, 10), 5), by = 1)) +
+        ggplot2::labs(x = "Variance inflation score",
+                      y = NULL)
+
+      print(patchwork::wrap_plots(p1 + p2 + p3 + patchwork::plot_layout(nrow = plot_rows))) |>
+        suppressWarnings()
+
+    } else {
+
+      print(.vif)
+
+      print(patchwork::wrap_plots(p1 + p2 + patchwork::plot_layout(nrow = plot_rows))) |>
+        suppressWarnings()
+
+    }
 
   }
 
-
-}

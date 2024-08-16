@@ -19,6 +19,19 @@
 
 tidy_vif <- function(mod) {
 
+  if (inherits(mod, "gam")) {
+
+    warning("Variance inflation factoring applied to linear model only with interactions removed.")
+
+    .terms <- attributes(mod$terms)$term.labels
+
+    mod <-
+      lm(glue::glue("{as.character(mod$call$formula)[[2]]} ~ {paste(.terms[!stringr::str_detect(.terms, '[:]')], collapse = ' + ')}"),
+         data = mod$model)
+
+
+  }
+
   .df <-
     mod |>
     car::vif() |>
