@@ -33,9 +33,6 @@ model_covariates <- function(mod,
       mod |>
       dominance(...)
 
-    .max <-
-      max(.da$dominance, na.rm = TRUE)
-
     p0 <-
       .da |>
       ggplot2::ggplot(ggplot2::aes(x = dominance,
@@ -44,22 +41,25 @@ model_covariates <- function(mod,
                                                             mean,
                                                             .desc = TRUE))) +
       theme_meow() +
-      ggplot2::labs(x = "Relative importance",
-                    y = NULL) +
+      ggplot2::labs(y = NULL) +
       ggplot2::scale_x_continuous(limits = c(0, NA_real_))
 
     if (inherits(mod, "gam")) {
 
-      if (min(.da$shared, na.rm = TRUE)) {
+      if (min(.da$shared, na.rm = TRUE) < 0) {
         ## TODO: Investigate what this actually means.
         warning("GAM dominance analysis reports some shared relative importance below 0.")
       }
+
+      .r2 <-
+        round(sum(.da$dominance, na.rm = TRUE), digits = 3)
 
       p1 <-
         p0 +
         ggplot2::geom_col(fill = "#BFBFBF") +
         ggplot2::geom_col(ggplot2::aes(x = unique),
-                          fill = "#808080")
+                          fill = "#808080") +
+        ggplot2::labs(x = glue::glue("Relative importance up to {.r2}"))
 
       p2 <-
         .da |>
@@ -73,7 +73,7 @@ model_covariates <- function(mod,
                                                               mean,
                                                               .desc = TRUE))) +
         theme_meow() +
-        ggplot2::labs(x = "Unique vs. shared importance",
+        ggplot2::labs(x = glue::glue("Unique ({round(sum(.da$unique, na.rm = TRUE), digits = 3)}) vs. shared ({ round(sum(.da$unique, na.rm = TRUE), digits = 3)}) importance"),
                       y = NULL) +
         ggplot2::scale_x_continuous(labels = scales::percent,
                                     limits = c(0, NA_real_)) +
@@ -89,7 +89,8 @@ model_covariates <- function(mod,
         ggdist::stat_slabinterval(point_interval = "mean_hdci",
                                   density = "histogram",
                                   fill = "#808080",
-                                  .width = c(0.5, 0.89))
+                                  .width = c(0.5, 0.89)) +
+        ggplot2::labs(x = "Relative importance")
 
       p2 <-
         .da |>
