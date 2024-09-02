@@ -54,6 +54,13 @@ model_covariates <- function(mod,
       .r2 <-
         round(sum(.da$dominance, na.rm = TRUE), digits = 3)
 
+      if (any(.da$unique < 0)) {
+        warning("Some *unique* variable R-squared contribution reported as negative.")
+      }
+      if (any(.da$shared < 0)) {
+        warning("Some *shared* variable R-squared contribution reported as negative.")
+      }
+
       p1 <-
         p0 +
         ggplot2::geom_col(fill = "#BFBFBF") +
@@ -73,7 +80,7 @@ model_covariates <- function(mod,
                                                               mean,
                                                               .desc = TRUE))) +
         theme_meow() +
-        ggplot2::labs(x = glue::glue("Unique ({round(sum(.da$unique, na.rm = TRUE), digits = 3)}) vs. shared ({ round(sum(.da$unique, na.rm = TRUE), digits = 3)}) importance"),
+        ggplot2::labs(x = glue::glue("Unique ({round(sum(.da$unique, na.rm = TRUE), digits = 3)}) vs. shared ({ round(sum(.da$shared, na.rm = TRUE), digits = 3)}) importance"),
                       y = NULL) +
         ggplot2::scale_x_continuous(labels = scales::percent,
                                     limits = c(0, NA_real_)) +
