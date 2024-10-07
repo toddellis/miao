@@ -46,19 +46,15 @@ model_covariates <- function(mod,
 
     if (inherits(mod, "gam")) {
 
-      if (min(.da$shared, na.rm = TRUE) < 0) {
-        ## TODO: Investigate what this actually means.
-        warning("GAM dominance analysis reports some shared relative importance below 0.")
-      }
-
       .r2 <-
         round(sum(.da$dominance, na.rm = TRUE), digits = 3)
 
+      ## TODO: Investigate what this statistically means.
       if (any(.da$unique < 0)) {
-        warning("Some *unique* variable R-squared contribution reported as negative.")
+        warning(glue::glue("Some *unique* variable R-squared contribution reported as negative (min: {min(.da$unique)})."))
       }
       if (any(.da$shared < 0)) {
-        warning("Some *shared* variable R-squared contribution reported as negative.")
+        warning(glue::glue("Some *shared* variable R-squared contribution reported as negative (min: {min(.da$shared)})."))
       }
 
       p1 <-

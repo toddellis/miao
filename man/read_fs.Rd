@@ -3,7 +3,7 @@
 \name{read_fs}
 \alias{read_fs}
 \alias{read_folder}
-\title{read_folder}
+\title{read_fs}
 \usage{
 read_fs(files, colClasses = c(NULL), method = c("purrr", "base"))
 

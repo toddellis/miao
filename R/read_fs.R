@@ -1,4 +1,4 @@
-#' read_folder
+#' read_fs
 #'
 #' Loop through objects in an fs::dir_ls filelist and apply data.table::fread across them.
 #'

@@ -50,23 +50,4 @@ sf_dims <- function(x, vars = c("all", "basic", "lines")) {
 
   return(.df)
 
-  # suppressWarnings(
-  #   x |>
-  #     dplyr::bind_cols(x |>
-  #                        sf::st_area() |>
-  #                        tibble::as_tibble() |>
-  #                        dplyr::rename(area = value) |>
-  #                        dplyr::mutate(area = as.numeric(area))) |>
-  #     dplyr::bind_cols(x |>
-  #                        sf::st_length() |>
-  #                        tibble::as_tibble() |>
-  #                        dplyr::rename(length = value) |>
-  #                        dplyr::mutate(length = as.numeric(length))) |>
-  #     dplyr::bind_cols(x |>
-  #                        sf::st_perimeter() |>
-  #                        tibble::as_tibble() |>
-  #                        dplyr::rename(perimeter = value) |>
-  #                        dplyr::mutate(perimeter = as.numeric(perimeter)))
-  # )
-
 }

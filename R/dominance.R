@@ -34,8 +34,7 @@ dominance <- function(mod,
 
   if (inherits(mod, "gam")) {
 
-    warning("Generalised additive models ignore `n_boot` (for now) and `method` input options.")
-
+    # warning("Generalised additive models ignore `n_boot` (for now) and `method` input options.")
     ## TODO: Pick apart `gam.hp::gam.hp()` function to ingest its methods into {miao} *and* add bootstrapped sampling.
     ##     : The rationale here is...this package just seems incredibly poorly designed (like {relaimpo}, tbqh), and the scripts are full of possible bugs and beta-testing code fragments or created objects that go nowhere. I'm honestly a bit sceptical of it doing what it sets out to do correctly. There's no reason that `type = ...` needs to be binary as an input -- processing both 'adjR2' and 'dev' would take the same processing time. The authors of the package also designed it and a myriad of nearly-identical packages from a perspective of inflating their own h-index, which is really danged obnoxious. I also would simply like to understand how the method works to possibly improve on it (e.g., bootstrapping).
     .dom <-
