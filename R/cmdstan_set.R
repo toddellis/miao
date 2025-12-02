@@ -13,7 +13,7 @@
 #' }
 #'
 
-cmdstan_set <- function(user = NULL) {
+cmdstan_set <- function(user = NA) {
   if (!is.null(user)) {
     .path <- Sys.getenv("USERPROFILE")
   } else {
@@ -41,7 +41,6 @@ cmdstan_set <- function(user = NULL) {
 
   cmdstanr::check_cmdstan_toolchain(fix = TRUE)
 
-  cat(paste0("Setting cmdstan path to '", .cmdstan, '\''))
   cmdstanr::set_cmdstan_path(path = .cmdstan)
 
 }

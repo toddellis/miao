@@ -4,7 +4,7 @@
 \alias{cmdstan_set}
 \title{cmdstan_set}
 \usage{
-cmdstan_set(user = NULL)
+cmdstan_set(user = NA)
 }
 \arguments{
 \item{user}{OS username used for finding the cmdstan installation directory. Optional: By default, `Sys.getenv("USERPROFILE")` is called.}
