@@ -25,20 +25,42 @@ theme_meow <- function(axis.title = 14,
                        legend.text = 10.25,
                        strip.bg = "white",
                        plot.bg = "white",
-                       line.col = "#838383") {
-  cowplot::theme_cowplot() +
-    ggplot2::theme(
-      legend.position = 'bottom',
-      axis.ticks = ggplot2::element_line(colour = line.col),
-      axis.ticks.y = ggplot2::element_blank(),
-      axis.line.y = ggplot2::element_blank(),
-      axis.line.x = ggplot2::element_line(colour = line.col),
-      axis.text = ggplot2::element_text(size = axis.text),
-      axis.title = ggplot2::element_text(size = axis.title),
-      strip.background = ggplot2::element_rect(fill = strip.bg),
-      strip.text = ggplot2::element_text(size = strip.text),
-      legend.text = ggplot2::element_text(size = legend.text),
-      panel.background = ggplot2::element_rect(fill = plot.bg),
-      plot.background = ggplot2::element_rect(fill = plot.bg)
-    )
+                       line.col = "#838383",
+                       y.axis = FALSE) {
+
+  if (y.axis == TRUE) {
+    cowplot::theme_cowplot() +
+      ggplot2::theme(
+        legend.position = 'bottom',
+        axis.ticks = ggplot2::element_line(colour = line.col),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.line.y = ggplot2::element_line(colour = line.col),
+        axis.line.x = ggplot2::element_line(colour = line.col),
+        axis.text = ggplot2::element_text(size = axis.text),
+        axis.title = ggplot2::element_text(size = axis.title),
+        strip.background = ggplot2::element_rect(fill = strip.bg),
+        strip.text = ggplot2::element_text(size = strip.text),
+        legend.text = ggplot2::element_text(size = legend.text),
+        panel.background = ggplot2::element_rect(fill = plot.bg),
+        plot.background = ggplot2::element_rect(fill = plot.bg)
+      )
+  } else if (y.axis == FALSE) {
+    cowplot::theme_cowplot() +
+      ggplot2::theme(
+        legend.position = 'bottom',
+        axis.ticks = ggplot2::element_line(colour = line.col),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.line.y = ggplot2::element_blank(),
+        axis.line.x = ggplot2::element_line(colour = line.col),
+        axis.text = ggplot2::element_text(size = axis.text),
+        axis.title = ggplot2::element_text(size = axis.title),
+        strip.background = ggplot2::element_rect(fill = strip.bg),
+        strip.text = ggplot2::element_text(size = strip.text),
+        legend.text = ggplot2::element_text(size = legend.text),
+        panel.background = ggplot2::element_rect(fill = plot.bg),
+        plot.background = ggplot2::element_rect(fill = plot.bg)
+      )
+  }
+
 }
+

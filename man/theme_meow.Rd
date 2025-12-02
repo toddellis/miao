@@ -11,7 +11,8 @@ theme_meow(
   legend.text = 10.25,
   strip.bg = "white",
   plot.bg = "white",
-  line.col = "#838383"
+  line.col = "#838383",
+  y.axis = FALSE
 )
 }
 \arguments{

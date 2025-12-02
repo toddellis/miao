@@ -3,6 +3,7 @@
 export(bind_limits)
 export(catnip)
 export(circular)
+export(cmdstan_set)
 export(collectable)
 export(create_project)
 export(csv_compress)
